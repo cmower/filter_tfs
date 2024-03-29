@@ -27,9 +27,10 @@ class TransformHandler:
         )
 
     def update(self):
-        tf = TransformStamped(transform=self.tf_filter(self.tf_listener.get()))
-        if tf.transform is None:
+        transform_raw = self.tf_listener.get()
+        if transform_raw is None and (not self.tf_filter.is_ready()):
             return
+        tf = TransformStamped(transform=self.tf_filter(transform_raw))
         tf.header.frame_id = self.parent_frame
         tf.child_frame_id = self.child_frame + "_filtered"
         tf.header.stamp = rospy.Time.now()

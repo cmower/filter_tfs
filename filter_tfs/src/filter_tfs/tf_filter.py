@@ -49,6 +49,9 @@ class Filter(abc.ABC):
             self.filt = raw
         self.n += 1
         self.apply(raw)
+        return self.get()
+
+    def get(self):
         return self.filt.copy()
 
 
@@ -83,9 +86,11 @@ class TransformFilter:
         return self.translation_filter.is_ready() and self.rotation_filter.is_ready()
 
     def __call__(self, transform: Transform):
-        if transform is None:
-            return
-        tr, rr = transform2numpy(transform)
-        tf = self.translation_filter(tr)
-        rf = self.rotation_filter(rr)
+        if transform is not None:
+            tr, rr = transform2numpy(transform)
+            tf = self.translation_filter(tr)
+            rf = self.rotation_filter(rr)
+        else:
+            tf = self.translation_filter.get()
+            rf = self.rotation_filter.get()
         return numpy2transform(tf, rf)
