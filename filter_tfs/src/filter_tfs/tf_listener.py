@@ -28,10 +28,11 @@ class TransformListener:
             tf = self.tf_buffer.lookup_transform(
                 self.parent_frame, self.child_frame, rospy.Time()
             )
+            transform = tf.transform
         except (
             tf2_ros.LookupException,
             tf2_ros.ConnectivityException,
             tf2_ros.ExtrapolationException,
         ):
-            tf = None
-        return tf.transform
+            transform = None
+        return transform
