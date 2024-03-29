@@ -11,6 +11,7 @@ class TransformHandler:
     def __init__(
         self,
         tf_broadcaster,
+        tf_buffer,
         parent_frame: str,
         child_frame: str,
         fraction_translation: float,
@@ -20,7 +21,7 @@ class TransformHandler:
         self.parent_frame = parent_frame
         self.child_frame = child_frame
         self.tf_broadcaster = tf_broadcaster
-        self.tf_listener = TransformListener(self.tf_buffer, parent_frame, child_frame)
+        self.tf_listener = TransformListener(tf_buffer, parent_frame, child_frame)
         self.tf_filter = TransformFilter(
             fraction_translation, fraction_rotation, max_observations
         )
@@ -46,8 +47,8 @@ class Node:
         assert (
             self.max_observations > 0
         ), "~max_observations must be an int greater than 0"
-        self.tf_buffer = init_buffer()
         self.tf_broadcaster = tf2_ros.TransformBroadcaster()
+        self.tf_buffer = init_buffer()
         self.tf_handlers = []
 
     def _get_fraction_param(self, name):
@@ -63,6 +64,7 @@ class Node:
         self.tf_handlers.append(
             TransformHandler(
                 self.tf_broadcaster,
+                self.tf_buffer,
                 parent_frame,
                 child_frame,
                 self.fraction_translation,
