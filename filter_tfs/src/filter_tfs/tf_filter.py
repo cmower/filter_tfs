@@ -22,6 +22,11 @@ def numpy2transform(t: np.ndarray, r: np.ndarray) -> Transform:
     transform.translation.x = t[0]
     transform.translation.y = t[1]
     transform.translation.z = t[2]
+    transform.rotation.x = r[0]
+    transform.rotation.y = r[1]
+    transform.rotation.z = r[2]
+    transform.rotation.w = r[3]
+    return transform
 
 
 class Filter(abc.ABC):
