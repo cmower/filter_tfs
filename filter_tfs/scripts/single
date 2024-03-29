@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+import rospy
+
+from filter_tfs.filter_node import Node, main
+
+
+class SingleNode(Node):
+
+    def __init__(self):
+        super().__init__("single_tf_filter")
+        parent_frame = rospy.get_param("~parent_frame")
+        child_frame = rospy.get_param("~child_frame")
+        self.add(parent_frame, child_frame)
+
+
+if __name__ == "__main__":
+    main(SingleNode)

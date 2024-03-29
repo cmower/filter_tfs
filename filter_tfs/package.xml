@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>filter_tfs</name>
+  <version>1.0.0</version>
+  <description>The filter_tfs package</description>
+
+  <maintainer email="christopher.mower@kcl.ac.uk">cmower</maintainer>
+  <author email="christopher.mower@kcl.ac.uk">cmower</author>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+
+</package>
