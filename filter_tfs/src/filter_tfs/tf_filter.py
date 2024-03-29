@@ -57,7 +57,7 @@ class RotationFilter(Filter):
 
     def apply(self, raw: np.ndarray):
         ts = [0.0, 1.0]
-        rs = [Rot.from_quat(self.filt), Rot.from_quat(raw)]
+        rs = Rot.concatenate([Rot.from_quat(self.filt), Rot.from_quat(raw)])
         slerp = Slerp(ts, rs)
         self.filt = slerp(self.alpha).as_quat()
 
